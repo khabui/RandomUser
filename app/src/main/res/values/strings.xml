@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">Random User</string>
+    <string name="button_txt">Generate User</string>
+    <string name="default_user_txt">My Android</string>
+    <string name="user_detail_contacts">Contacts</string>
+    <string name="user_detail_mail">Email</string>
+    <string name="user_detail_cell">Cell</string>
+    <string name="user_detail_phone">Phone</string>
+    <string name="default_mail">dana.perez87@example.com</string>
+    <string name="default_cell">(662)–144–8095</string>
+    <string name="default_phone">(653)–962–9665</string>
+    <string name="default_name">Rolf Hegdal</string>
+    <string name="user_detail_about">About</string>
+    <string name="user_detail_location">Location</string>
+    <string name="user_detail_dob">Date of birth</string>
+    <string name="user_detail_registered">Registered</string>
+    <string name="default_location">Lousiana, Tulsa, 5210 Frances Ct, 69834</string>
+    <string name="default_dob">1975-11-12 06:34:44</string>
+    <string name="default_registered">2015-11-04 22:09:36</string>
+</resources>

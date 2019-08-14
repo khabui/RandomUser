@@ -1,6 +1,9 @@
 package com.example.randomuser.model;
 
-public class RandomUser {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class RandomUser implements Parcelable {
     private String gender;
     private String name;
     private String location;
@@ -14,9 +17,7 @@ public class RandomUser {
     private String largePictureURL;
     private String mediumPictureURL;
 
-    public RandomUser() {
-
-    }
+    public RandomUser() { }
 
     public RandomUser(String gender, String name, String location, String email, String login, String dob, String registered, String phone, String cell, String id, String largePictureURL, String mediumPictureURL) {
         this.gender = gender;
@@ -32,6 +33,33 @@ public class RandomUser {
         this.largePictureURL = largePictureURL;
         this.mediumPictureURL = mediumPictureURL;
     }
+
+    protected RandomUser(Parcel in) {
+        gender = in.readString();
+        name = in.readString();
+        location = in.readString();
+        email = in.readString();
+        login = in.readString();
+        dob = in.readString();
+        registered = in.readString();
+        phone = in.readString();
+        cell = in.readString();
+        id = in.readString();
+        largePictureURL = in.readString();
+        mediumPictureURL = in.readString();
+    }
+
+    public static final Creator<RandomUser> CREATOR = new Creator<RandomUser>() {
+        @Override
+        public RandomUser createFromParcel(Parcel in) {
+            return new RandomUser(in);
+        }
+
+        @Override
+        public RandomUser[] newArray(int size) {
+            return new RandomUser[size];
+        }
+    };
 
     public String getGender() {
         return gender;
@@ -127,5 +155,26 @@ public class RandomUser {
 
     public void setMediumPictureURL(String mediumPictureURL) {
         this.mediumPictureURL = mediumPictureURL;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(gender);
+        parcel.writeString(name);
+        parcel.writeString(location);
+        parcel.writeString(email);
+        parcel.writeString(login);
+        parcel.writeString(dob);
+        parcel.writeString(registered);
+        parcel.writeString(phone);
+        parcel.writeString(cell);
+        parcel.writeString(id);
+        parcel.writeString(largePictureURL);
+        parcel.writeString(mediumPictureURL);
     }
 }

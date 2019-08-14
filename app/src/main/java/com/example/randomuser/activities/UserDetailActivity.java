@@ -2,13 +2,14 @@ package com.example.randomuser.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.randomuser.R;
-import com.example.randomuser.adapters.RecyclerViewAdapter;
+import com.example.randomuser.model.RandomUser;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -20,15 +21,19 @@ public class UserDetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_user_detail);
 
         //-- Receive data
-        String name = getIntent().getExtras().getString("user_name");
-        String first = "About " + getIntent().getExtras().getString("user_first");
-        String avatarURL = getIntent().getExtras().getString("user_avatar");
-        String mail = getIntent().getExtras().getString("user_mail");
-        String cell = getIntent().getExtras().getString("user_cell");
-        String phone = getIntent().getExtras().getString("user_phone");
-        String location = getIntent().getExtras().getString("user_location");
-        String dob = getIntent().getExtras().getString("user_dob");
-        String registered = getIntent().getExtras().getString("user_registered");
+        Intent intent = getIntent();
+        RandomUser user = intent.getParcelableExtra("user detail");
+
+        assert user != null;
+        String name = user.getName();
+        String first = "About " + user.getName().split("\\s")[0];
+        String avatarURL = user.getLargePictureURL();
+        String mail = user.getEmail();
+        String cell = user.getCell();
+        String phone = user.getPhone();
+        String location = user.getLocation();
+        String dob = user.getDob();
+        String registered = user.getRegistered();
 
         //-- Init views
         TextView userName = findViewById(R.id.user_detail_name);

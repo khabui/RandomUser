@@ -236,7 +236,6 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
             user.setMediumPictureURL(temp.get("medium").toString());
 
             listUser.add(user);
-            user = null;
         }
     }
 
@@ -245,16 +244,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
         Log.d(TAG, "onUserClick: clicked." + position);
 
         Intent intent = new Intent(this, UserDetailActivity.class);
-
-        intent.putExtra("user_name", listUser.get(position).getName());
-        intent.putExtra("user_first", listUser.get(position).getName().split(" ")[0]);
-        intent.putExtra("user_avatar", listUser.get(position).getLargePictureURL());
-        intent.putExtra("user_mail", listUser.get(position).getEmail());
-        intent.putExtra("user_cell", listUser.get(position).getCell());
-        intent.putExtra("user_phone", listUser.get(position).getPhone());
-        intent.putExtra("user_location", listUser.get(position).getLocation());
-        intent.putExtra("user_dob", listUser.get(position).getDob());
-        intent.putExtra("user_registered", listUser.get(position).getRegistered());
+        intent.putExtra("user detail", listUser.get(position));
 
         startActivity(intent);
     }

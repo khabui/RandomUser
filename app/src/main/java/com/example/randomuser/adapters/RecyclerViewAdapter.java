@@ -15,17 +15,20 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.randomuser.R;
-import com.example.randomuser.model.RandomUser;
+import com.example.randomuser.model.User;
+import com.example.randomuser.util.TextUtil;
 
 import java.util.ArrayList;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private static final String TAG = "RecyclerViewAdapter";
 
-    private ArrayList<RandomUser> listUser;
+    private ArrayList<User> listUser;
     private Context context;
 
     private OnUserListener onUserListener;
@@ -33,7 +36,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     private final int VIEW_TYPE_ITEM = 0;
     private final int VIEW_TYPE_LOADING = 1;
 
-    public RecyclerViewAdapter(ArrayList<RandomUser> listUser, Context context, OnUserListener onUserListener) {
+    public RecyclerViewAdapter(ArrayList<User> listUser, Context context, OnUserListener onUserListener) {
         this.listUser = listUser;
         this.context = context;
         this.onUserListener = onUserListener;
@@ -63,13 +66,13 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
             Glide.with(context)
                     .asBitmap()
-                    .load(listUser.get(position).getMediumPictureURL())
+                    .load(listUser.get(position).getPicture().getMedium())
                     .apply(options)
                     .into(((ItemViewHolder) holder).imageView);
 
-            ((ItemViewHolder) holder).textView.setText(listUser.get(position).getName());
+            ((ItemViewHolder) holder).textView.setText(TextUtil.toTitleCase(listUser.get(position).getName().getFirst() + " " + listUser.get(position).getName().getLast()));
         } else if (holder instanceof LoadingViewHolder) {
-            LoadingViewHolder loadingViewHolder = (LoadingViewHolder)holder;
+            LoadingViewHolder loadingViewHolder = (LoadingViewHolder) holder;
             loadingViewHolder.progressBar.setIndeterminate(true);
         }
     }
@@ -85,18 +88,22 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     }
 
     static class ItemViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+        @BindView(R.id.user_image)
         CircleImageView imageView;
-        OnUserListener onUserListener;
+
+        @BindView(R.id.parent_layout)
         RelativeLayout parentLayout;
+
+        @BindView(R.id.user_name)
         TextView textView;
+
+        OnUserListener onUserListener;
 
         ItemViewHolder(@NonNull View itemView, OnUserListener onUserListener) {
             super(itemView);
 
-            imageView = itemView.findViewById(R.id.user_image);
-            textView = itemView.findViewById(R.id.user_name);
-            parentLayout = itemView.findViewById(R.id.parent_layout);
             this.onUserListener = onUserListener;
+            ButterKnife.bind(this, itemView);
 
             itemView.setOnClickListener(this);
         }
@@ -108,13 +115,12 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     }
 
     static class LoadingViewHolder extends RecyclerView.ViewHolder {
-
+        @BindView(R.id.progressBar)
         ProgressBar progressBar;
 
-         LoadingViewHolder(@NonNull View itemView) {
+        LoadingViewHolder(@NonNull View itemView) {
             super(itemView);
-
-            progressBar = itemView.findViewById(R.id.progressBar);
+            ButterKnife.bind(this, itemView);
         }
     }
 

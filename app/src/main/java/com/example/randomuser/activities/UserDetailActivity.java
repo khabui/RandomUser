@@ -64,7 +64,7 @@ public class UserDetailActivity extends AppCompatActivity {
 
         assert user != null;
         String name = TextUtil.toTitleCase(user.getName().getFirst() + " " + user.getName().getLast());
-        String first = "About " + user.getName().getFirst();
+        String first = "About " + TextUtil.toTitleCase(user.getName().getFirst());
         String avatarURL = user.getPicture().getLarge();
         String mail = user.getEmail();
         String cell = user.getCell();

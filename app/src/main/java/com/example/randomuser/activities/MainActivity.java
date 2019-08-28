@@ -57,7 +57,10 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
             public void onRefresh() {
                 final Handler handler = new Handler();
 
-                listUser.clear();
+                if (!listUser.isEmpty()) {
+                    listUser.clear();
+                    adapter.notifyDataSetChanged();
+                }
                 dataRequest();
 
                 handler.postDelayed(new Runnable() {

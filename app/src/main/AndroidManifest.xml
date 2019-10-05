@@ -13,16 +13,25 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
+
         <activity
-            android:name=".activities.UserDetailActivity"
-            android:launchMode="singleInstance" />
-        <activity android:name=".activities.MainActivity">
+            android:name=".view.LoginActivity"
+            android:theme="@style/AppThemeNoTitle">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".activities.UserDetailActivity"
+            android:launchMode="singleInstance" />
+
+        <activity
+            android:name=".activities.MainActivity"
+            android:launchMode="singleInstance" />
+
     </application>
 
 </manifest>

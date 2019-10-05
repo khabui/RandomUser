@@ -18,6 +18,7 @@ import com.example.randomuser.model.ApiResponse;
 import com.example.randomuser.model.User;
 import com.example.randomuser.network.RetrofitInstance;
 import com.example.randomuser.network.UserInterface;
+import com.example.randomuser.view.UserDetailActivity;
 
 import java.util.ArrayList;
 import java.util.Objects;

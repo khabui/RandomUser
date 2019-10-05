@@ -10,7 +10,7 @@ public class Location implements Parcelable {
 
     @SerializedName("street")
     @Expose
-    private String street;
+    private Street street;
 
     @SerializedName("city")
     @Expose
@@ -20,9 +20,13 @@ public class Location implements Parcelable {
     @Expose
     private String state;
 
+    @SerializedName("country")
+    @Expose
+    private String country;
+
     @SerializedName("postcode")
     @Expose
-    private String postcode;
+    private Integer postcode;
 
     @SerializedName("coordinates")
     @Expose
@@ -32,35 +36,18 @@ public class Location implements Parcelable {
     @Expose
     private Timezone timezone;
 
-    /**
-     * No args constructor for use in serialization
-     */
-    public Location() {
-    }
-
-    /**
-     * @param timezone
-     * @param street
-     * @param state
-     * @param postcode
-     * @param coordinates
-     * @param city
-     */
-    public Location(String street, String city, String state, String postcode, Coordinates coordinates, Timezone timezone) {
-        super();
-        this.street = street;
-        this.city = city;
-        this.state = state;
-        this.postcode = postcode;
-        this.coordinates = coordinates;
-        this.timezone = timezone;
-    }
-
     protected Location(Parcel in) {
-        street = in.readString();
+        street = in.readParcelable(Street.class.getClassLoader());
         city = in.readString();
         state = in.readString();
-        postcode = in.readString();
+        country = in.readString();
+        if (in.readByte() == 0) {
+            postcode = null;
+        } else {
+            postcode = in.readInt();
+        }
+        coordinates = in.readParcelable(Coordinates.class.getClassLoader());
+        timezone = in.readParcelable(Timezone.class.getClassLoader());
     }
 
     public static final Creator<Location> CREATOR = new Creator<Location>() {
@@ -75,11 +62,11 @@ public class Location implements Parcelable {
         }
     };
 
-    public String getStreet() {
+    public Street getStreet() {
         return street;
     }
 
-    public void setStreet(String street) {
+    public void setStreet(Street street) {
         this.street = street;
     }
 
@@ -99,11 +86,19 @@ public class Location implements Parcelable {
         this.state = state;
     }
 
-    public String getPostcode() {
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
+    public Integer getPostcode() {
         return postcode;
     }
 
-    public void setPostcode(String postcode) {
+    public void setPostcode(Integer postcode) {
         this.postcode = postcode;
     }
 
@@ -130,9 +125,17 @@ public class Location implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeString(street);
+        parcel.writeParcelable(street, i);
         parcel.writeString(city);
         parcel.writeString(state);
-        parcel.writeString(postcode);
+        parcel.writeString(country);
+        if (postcode == null) {
+            parcel.writeByte((byte) 0);
+        } else {
+            parcel.writeByte((byte) 1);
+            parcel.writeInt(postcode);
+        }
+        parcel.writeParcelable(coordinates, i);
+        parcel.writeParcelable(timezone, i);
     }
 }

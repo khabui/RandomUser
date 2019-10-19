@@ -11,7 +11,10 @@ public class UserInfoPresenter implements UserInfoContract.Presenter {
     }
 
     @Override
-    public void getUserInfo(User user) {
+    public void getUserInfo() {
+        // TODO: Get user from database / shared preferences / api_network
+//        User user = getUserFromDataSource();
+        User user = new User();
         userInfoView.showUserInfo(user);
     }
 }

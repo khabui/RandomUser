@@ -66,9 +66,9 @@ public class UserDetailActivity extends AppCompatActivity implements UserInfoCon
         // receive data
         Intent intent = getIntent();
         User user = intent.getParcelableExtra("user_detail");
-
-        UserInfoPresenter userInfoPresenter = new UserInfoPresenter(this);
-        userInfoPresenter.getUserInfo(user);
+        if (user != null) {
+            showUserInfo(user);
+        }
     }
 
     @Override
@@ -97,16 +97,8 @@ public class UserDetailActivity extends AppCompatActivity implements UserInfoCon
                 + ", " + user.getLocation().getCity()
                 + ", "
                 + user.getLocation().getState());
-        String dob = user.getDob()
-                .getDate()
-                .split("T")[0]
-                + " "
-                + user.getDob().getDate().split("T")[1].split("Z")[0];
-        String registered = user.getRegistered()
-                .getDate()
-                .split("T")[0]
-                + " "
-                + user.getRegistered().getDate().split("T")[1].split("Z")[0];
+        String dob = TextUtil.dateAndTime(user.getDob().getDate());
+        String registered = TextUtil.dateAndTime(user.getRegistered().getDate());
 
         // set value to view
         userName.setText(name);

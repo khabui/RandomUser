@@ -33,9 +33,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     private OnUserListener onUserListener;
 
-    private final int VIEW_TYPE_ITEM = 0;
-    private final int VIEW_TYPE_LOADING = 1;
-
     public RecyclerViewAdapter(ArrayList<User> listUser, Context context, OnUserListener onUserListener) {
         this.listUser = listUser;
         this.context = context;
@@ -45,46 +42,31 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        if (viewType == VIEW_TYPE_ITEM) {
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.generated_user_layout, parent, false);
-            return new ItemViewHolder(view, onUserListener);
-        } else {
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_loading, parent, false);
-            return new LoadingViewHolder(view);
-        }
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.generated_user_layout, parent, false);
+        return new ItemViewHolder(view, onUserListener);
     }
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, final int position) {
         Log.d(TAG, "onBindViewHolder: Called.");
 
-        if (holder instanceof ItemViewHolder) {
-            RequestOptions options = new RequestOptions()
-                    .centerCrop()
-                    .placeholder(R.mipmap.ic_launcher_round)
-                    .error(R.mipmap.ic_launcher_round);
+        RequestOptions options = new RequestOptions()
+                .centerCrop()
+                .placeholder(R.mipmap.ic_launcher_round)
+                .error(R.mipmap.ic_launcher_round);
 
-            Glide.with(context)
-                    .asBitmap()
-                    .load(listUser.get(position).getPicture().getMedium())
-                    .apply(options)
-                    .into(((ItemViewHolder) holder).imageView);
+        Glide.with(context)
+                .asBitmap()
+                .load(listUser.get(position).getPicture().getMedium())
+                .apply(options)
+                .into(((ItemViewHolder) holder).imageView);
 
-            ((ItemViewHolder) holder).textView.setText(TextUtil.toTitleCase(listUser.get(position).getName().getFirst() + " " + listUser.get(position).getName().getLast()));
-        } else if (holder instanceof LoadingViewHolder) {
-            LoadingViewHolder loadingViewHolder = (LoadingViewHolder) holder;
-            loadingViewHolder.progressBar.setIndeterminate(true);
-        }
+        ((ItemViewHolder) holder).textView.setText(TextUtil.toTitleCase(listUser.get(position).getName().getFirst() + " " + listUser.get(position).getName().getLast()));
     }
 
     @Override
     public int getItemCount() {
-        return listUser == null ? 0 : listUser.size();
-    }
-
-    @Override
-    public int getItemViewType(int position) {
-        return listUser.get(position) == null ? VIEW_TYPE_LOADING : VIEW_TYPE_ITEM;
+        return listUser.size();
     }
 
     static class ItemViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -111,16 +93,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         @Override
         public void onClick(View view) {
             onUserListener.onUserClick(getAdapterPosition());
-        }
-    }
-
-    static class LoadingViewHolder extends RecyclerView.ViewHolder {
-        @BindView(R.id.progressBar)
-        ProgressBar progressBar;
-
-        LoadingViewHolder(@NonNull View itemView) {
-            super(itemView);
-            ButterKnife.bind(this, itemView);
         }
     }
 

@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
+import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -45,6 +47,9 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
 
+    @BindView(R.id.loadingBar)
+    ProgressBar progressBar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,8 +64,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
                 final Handler handler = new Handler();
 
                 if (!listUser.isEmpty()) {
-                    listUser.clear();
-                    adapter.notifyDataSetChanged();
+                    onClearUser();
                 }
                 dataRequest();
 
@@ -99,8 +103,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
     }
 
     private void loadMoreData() {
-        listUser.add(null);
-        adapter.notifyItemInserted(listUser.size() - 1);
+        onShowLoadingBar();
 
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
@@ -117,8 +120,10 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
                     public void onResponse(@NonNull Call<ApiResponse> call, @NonNull retrofit2.Response<ApiResponse> response) {
                         if (response.isSuccessful()) {
                             ApiResponse results = response.body();
-                            listUser.addAll(Objects.requireNonNull(results).getResults());
-                            Objects.requireNonNull(recyclerView.getAdapter()).notifyDataSetChanged();
+                            if (results != null) {
+                                onAddMore(results.getResults());
+                                onHideLoadingBar();
+                            }
                         } else {
                             Toast.makeText(MainActivity.this, "Error: " + response.code(), Toast.LENGTH_SHORT).show();
                         }
@@ -160,6 +165,24 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
                 }
             }
         });
+    }
+
+    private void onAddMore(ArrayList<User> users) {
+        listUser.addAll(users);
+        adapter.notifyDataSetChanged();
+    }
+
+    private void onClearUser() {
+        listUser.clear();
+        adapter.notifyDataSetChanged();
+    }
+
+    private void onShowLoadingBar() {
+        progressBar.setVisibility(View.VISIBLE);
+    }
+
+    private void onHideLoadingBar() {
+        progressBar.setVisibility(View.GONE);
     }
 
     @Override

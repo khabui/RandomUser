@@ -2,6 +2,13 @@ package com.example.randomuser.util;
 
 public class TextUtil {
 
+    public static String dateAndTime(String inputString) {
+        String date = inputString.split("T")[0];
+        String time = inputString.split("T")[1].split("Z")[0];
+
+        return (date + " " + time);
+    }
+
     public static String toTitleCase(String string) {
         if (string == null) {
             return null;

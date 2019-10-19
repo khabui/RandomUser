@@ -4,7 +4,7 @@ import com.example.randomuser.model.User;
 
 public interface UserInfoContract {
     interface Presenter {
-        void getUserInfo(User user);
+        void getUserInfo();
     }
 
     interface View {

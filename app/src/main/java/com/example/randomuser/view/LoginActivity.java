@@ -10,7 +10,6 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.randomuser.R;
-import com.example.randomuser.activities.MainActivity;
 import com.example.randomuser.presenter.LoginContract;
 import com.example.randomuser.presenter.LoginPresenter;
 

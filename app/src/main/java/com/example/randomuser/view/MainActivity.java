@@ -29,13 +29,11 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
 
     private static final String TAG = "MainActivity";
 
-    private boolean isLoading = false;
-    private final int THREAD_SHOT = 5;
-
     private UserListContract.Presenter userListPresenter;
     private LinearLayoutManager linearLayoutManager;
-
     private RecyclerViewAdapter adapter;
+
+    private boolean isLoading = false;
 
     @BindView(R.id.swipe_refresh)
     SwipeRefreshLayout swipeRefreshLayout;
@@ -77,7 +75,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
 
-                if (!isLoading && linearLayoutManager.getItemCount() - THREAD_SHOT == linearLayoutManager.findLastVisibleItemPosition()) {
+                if (!isLoading && (linearLayoutManager.findLastVisibleItemPosition() == adapter.getItemCount() - 1)) {
                     userListPresenter.loadMoreData(5, "us");
                     isLoading = true;
                 }

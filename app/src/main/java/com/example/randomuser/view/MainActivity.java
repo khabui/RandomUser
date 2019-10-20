@@ -21,6 +21,7 @@ import com.example.randomuser.presenter.UserListContract;
 import com.example.randomuser.presenter.UserListPresenter;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -44,6 +45,9 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
     @BindView(R.id.loadingBar)
     ProgressBar progressBar;
 
+    private List<User> users = new ArrayList<>();
+    private int index = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,14 +55,16 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
 
         ButterKnife.bind(this);
         userListPresenter = new UserListPresenter(this);
+        userListPresenter.getDataFromURL(index, 20, "us");
 
         onSetupRecyclerView();
     }
 
     private void onSetupRecyclerView() {
-        userListPresenter.getDataFromURL(20, "us");
         linearLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(linearLayoutManager);
+        adapter = new RecyclerViewAdapter(users, this, this);
+        recyclerView.setAdapter(adapter);
 
         onSwipeToRefresh();
         onLoadMoreData();
@@ -76,7 +82,8 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
                 super.onScrolled(recyclerView, dx, dy);
 
                 if (!isLoading && (linearLayoutManager.findLastVisibleItemPosition() == adapter.getItemCount() - 1)) {
-                    userListPresenter.loadMoreData(5, "us");
+                    onShowLoadingBar();
+                    userListPresenter.getDataFromURL(index, 5, "us");
                     isLoading = true;
                 }
             }
@@ -94,15 +101,10 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
     }
 
     @Override
-    public void onNotLoading() {
-        isLoading = false;
-    }
-
-    @Override
     public void onUserClick(int position) {
         Log.d(TAG, "onUserClick: clicked." + position);
 
-        User user = userListPresenter.getUserData(position);
+        User user = users.get(position);
 
         Intent intent = new Intent(this, UserDetailActivity.class);
         intent.putExtra("user_detail", user);
@@ -110,9 +112,16 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
     }
 
     @Override
-    public void onGetDataSuccess(ArrayList<User> userList) {
-        adapter = new RecyclerViewAdapter(userList, this, this);
-        recyclerView.setAdapter(adapter);
+    public void onGetDataSuccess(boolean isLoadMore, List<User> userList) {
+        if (!isLoadMore) {
+            index = 0;
+            users.clear();
+        }
+        index = users.size() - 1;
+        users.addAll(userList);
+        onHideLoadingBar();
+        isLoading = false;
+        adapter.notifyDataSetChanged();
     }
 
     @Override
@@ -126,11 +135,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
             @Override
             public void onRefresh() {
                 final Handler handler = new Handler();
-
-                userListPresenter.clearUsers();
-                adapter.notifyDataSetChanged();
-
-                userListPresenter.getDataFromURL(20, "us");
+                userListPresenter.getDataFromURL(index, 20, "us");
 
                 handler.postDelayed(new Runnable() {
                     @Override
@@ -144,8 +149,4 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
         });
     }
 
-    @Override
-    public void onAddMore() {
-        adapter.notifyDataSetChanged();
-    }
 }

@@ -5,7 +5,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -18,7 +17,7 @@ import com.example.randomuser.R;
 import com.example.randomuser.model.User;
 import com.example.randomuser.util.TextUtil;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -28,12 +27,12 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     private static final String TAG = "RecyclerViewAdapter";
 
-    private ArrayList<User> listUser;
+    private List<User> listUser;
     private Context context;
 
     private OnUserListener onUserListener;
 
-    public RecyclerViewAdapter(ArrayList<User> listUser, Context context, OnUserListener onUserListener) {
+    public RecyclerViewAdapter(List<User> listUser, Context context, OnUserListener onUserListener) {
         this.listUser = listUser;
         this.context = context;
         this.onUserListener = onUserListener;

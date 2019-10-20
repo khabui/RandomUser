@@ -2,32 +2,24 @@ package com.example.randomuser.presenter;
 
 import com.example.randomuser.model.User;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public interface UserListContract {
     interface Presenter {
-        void clearUsers();
-
-        void getDataFromURL(int numberOfUsers, String nation);
-
-        void loadMoreData(int numberOfUsers, String nation);
-
-        User getUserData(int position);
+        // limit is number items of page
+        // offset is current last index of the list
+        void getDataFromURL(int offset, int limit, String nation);
     }
 
     interface View {
-        void onGetDataSuccess(ArrayList<User> userList);
+        void onGetDataSuccess(boolean isLoadMore, List<User> userList);
 
         void onGetDataFailure();
 
         void onSwipeToRefresh();
 
-        void onAddMore();
-
         void onShowLoadingBar();
 
         void onHideLoadingBar();
-
-        void onNotLoading();
     }
 }

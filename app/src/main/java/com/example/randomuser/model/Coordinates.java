@@ -16,22 +16,6 @@ public class Coordinates implements Parcelable {
     @Expose
     private String longitude;
 
-    /**
-     * No args constructor for use in serialization
-     */
-    public Coordinates() {
-    }
-
-    /**
-     * @param longitude
-     * @param latitude
-     */
-    public Coordinates(String latitude, String longitude) {
-        super();
-        this.latitude = latitude;
-        this.longitude = longitude;
-    }
-
     protected Coordinates(Parcel in) {
         latitude = in.readString();
         longitude = in.readString();

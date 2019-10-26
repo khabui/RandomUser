@@ -20,24 +20,6 @@ public class Name implements Parcelable {
     @Expose
     private String last;
 
-    /**
-     * No args constructor for use in serialization
-     */
-    public Name() {
-    }
-
-    /**
-     * @param title
-     * @param last
-     * @param first
-     */
-    public Name(String title, String first, String last) {
-        super();
-        this.title = title;
-        this.first = first;
-        this.last = last;
-    }
-
     protected Name(Parcel in) {
         title = in.readString();
         first = in.readString();

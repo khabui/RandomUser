@@ -16,22 +16,6 @@ public class Id implements Parcelable {
     @Expose
     private String value;
 
-    /**
-     * No args constructor for use in serialization
-     */
-    public Id() {
-    }
-
-    /**
-     * @param name
-     * @param value
-     */
-    public Id(String name, String value) {
-        super();
-        this.name = name;
-        this.value = value;
-    }
-
     protected Id(Parcel in) {
         name = in.readString();
         value = in.readString();

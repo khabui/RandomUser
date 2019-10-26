@@ -16,22 +16,6 @@ public class Timezone implements Parcelable {
     @Expose
     private String description;
 
-    /**
-     * No args constructor for use in serialization
-     */
-    public Timezone() {
-    }
-
-    /**
-     * @param description
-     * @param offset
-     */
-    public Timezone(String offset, String description) {
-        super();
-        this.offset = offset;
-        this.description = description;
-    }
-
     protected Timezone(Parcel in) {
         offset = in.readString();
         description = in.readString();

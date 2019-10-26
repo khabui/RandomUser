@@ -16,22 +16,6 @@ public class Registered implements Parcelable {
     @Expose
     private Integer age;
 
-    /**
-     * No args constructor for use in serialization
-     */
-    public Registered() {
-    }
-
-    /**
-     * @param age
-     * @param date
-     */
-    public Registered(String date, Integer age) {
-        super();
-        this.date = date;
-        this.age = age;
-    }
-
     protected Registered(Parcel in) {
         date = in.readString();
         if (in.readByte() == 0) {

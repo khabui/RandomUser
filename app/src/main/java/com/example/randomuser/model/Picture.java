@@ -20,24 +20,6 @@ public class Picture implements Parcelable {
     @Expose
     private String thumbnail;
 
-    /**
-     * No args constructor for use in serialization
-     */
-    public Picture() {
-    }
-
-    /**
-     * @param thumbnail
-     * @param medium
-     * @param large
-     */
-    public Picture(String large, String medium, String thumbnail) {
-        super();
-        this.large = large;
-        this.medium = medium;
-        this.thumbnail = thumbnail;
-    }
-
     protected Picture(Parcel in) {
         large = in.readString();
         medium = in.readString();

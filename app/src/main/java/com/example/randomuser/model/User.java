@@ -78,27 +78,10 @@ public class User implements Parcelable {
     @Expose
     private String nat;
 
-    /**
-     * No args constructor for use in serialization
-     */
     @Ignore
     public User() {
     }
 
-    /**
-     * @param picture
-     * @param id
-     * @param phone
-     * @param email
-     * @param location
-     * @param registered
-     * @param cell
-     * @param dob
-     * @param name
-     * @param gender
-     * @param nat
-     * @param login
-     */
     public User(String gender, Name name, Location location, String email, Login login, Dob dob, Registered registered, String phone, String cell, Id id, Picture picture, String nat) {
         super();
         this.gender = gender;

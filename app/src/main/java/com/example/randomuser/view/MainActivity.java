@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
         setContentView(R.layout.activity_main);
 
         ButterKnife.bind(this);
-        userListPresenter = new UserListPresenter(this);
+        userListPresenter = new UserListPresenter(this, getApplicationContext());
         userListPresenter.getDataFromURL(index, 20, "us");
 
         onSetupRecyclerView();
@@ -116,7 +116,9 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
         if (!isLoadMore) {
             index = 0;
             users.clear();
+            userListPresenter.clearDatabase();
         }
+
         index = users.size() - 1;
         users.addAll(userList);
         onHideLoadingBar();
@@ -135,6 +137,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
             @Override
             public void onRefresh() {
                 final Handler handler = new Handler();
+                index = 0;
                 userListPresenter.getDataFromURL(index, 20, "us");
 
                 handler.postDelayed(new Runnable() {

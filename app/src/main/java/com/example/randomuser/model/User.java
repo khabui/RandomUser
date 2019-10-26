@@ -3,55 +3,77 @@ package com.example.randomuser.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.Ignore;
+import androidx.room.PrimaryKey;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+@Entity(tableName = "user")
 public class User implements Parcelable {
 
+    @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = "userId")
+    public int userId;
+
+    @ColumnInfo(name = "gender")
     @SerializedName("gender")
     @Expose
     private String gender;
 
+    @ColumnInfo(name = "name")
     @SerializedName("name")
     @Expose
     private Name name;
 
+    @ColumnInfo(name = "location")
     @SerializedName("location")
     @Expose
     private Location location;
 
+    @ColumnInfo(name = "email")
     @SerializedName("email")
     @Expose
     private String email;
 
+    @ColumnInfo(name = "login")
     @SerializedName("login")
     @Expose
     private Login login;
 
+    @ColumnInfo(name = "dob")
     @SerializedName("dob")
     @Expose
     private Dob dob;
 
+    @ColumnInfo(name = "registered")
     @SerializedName("registered")
     @Expose
     private Registered registered;
 
+    @ColumnInfo(name = "phone")
     @SerializedName("phone")
     @Expose
     private String phone;
 
+    @ColumnInfo(name = "cell")
     @SerializedName("cell")
     @Expose
     private String cell;
 
+    @ColumnInfo(name = "id")
     @SerializedName("id")
     @Expose
     private Id id;
 
+    @ColumnInfo(name = "picture")
     @SerializedName("picture")
     @Expose
     private Picture picture;
 
+    @ColumnInfo(name = "nat")
     @SerializedName("nat")
     @Expose
     private String nat;
@@ -59,6 +81,7 @@ public class User implements Parcelable {
     /**
      * No args constructor for use in serialization
      */
+    @Ignore
     public User() {
     }
 

@@ -47,4 +47,8 @@ dependencies {
     // Retrofit 2
     implementation 'com.squareup.retrofit2:retrofit:2.6.2'
     implementation 'com.squareup.retrofit2:converter-gson:2.6.2'
+
+    // Room database
+    implementation "android.arch.persistence.room:runtime:${var}"
+    annotationProcessor "android.arch.persistence.room:compiler:${var}"
 }

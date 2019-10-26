@@ -13,7 +13,6 @@ import com.bumptech.glide.request.RequestOptions;
 import com.example.randomuser.R;
 import com.example.randomuser.model.User;
 import com.example.randomuser.presenter.UserInfoContract;
-import com.example.randomuser.presenter.UserInfoPresenter;
 import com.example.randomuser.util.TextUtil;
 
 import java.util.Objects;
@@ -28,7 +27,7 @@ public class UserDetailActivity extends AppCompatActivity implements UserInfoCon
     TextView userName;
 
     @BindView(R.id.user_about)
-    TextView userFirst;
+    TextView userAbout;
 
     @BindView(R.id.user_detail_mail)
     TextView userMail;
@@ -82,33 +81,15 @@ public class UserDetailActivity extends AppCompatActivity implements UserInfoCon
 
     @Override
     public void showUserInfo(User user) {
-        assert user != null;
-        String name = TextUtil.toTitleCase(user.getName().getFirst()
-                + " "
-                + user.getName().getLast());
-        String first = "About " + TextUtil.toTitleCase(user.getName().getFirst());
-        String avatarURL = user.getPicture().getLarge();
-        String mail = user.getEmail();
-        String cell = user.getCell();
-        String phone = user.getPhone();
-        String location = TextUtil.toTitleCase(user.getLocation().getStreet().getNumber()
-                + " "
-                + user.getLocation().getStreet().getName()
-                + ", " + user.getLocation().getCity()
-                + ", "
-                + user.getLocation().getState());
-        String dob = TextUtil.dateAndTime(user.getDob().getDate());
-        String registered = TextUtil.dateAndTime(user.getRegistered().getDate());
-
         // set value to view
-        userName.setText(name);
-        userFirst.setText(first);
-        userMail.setText(mail);
-        userCell.setText(cell);
-        userPhone.setText(phone);
-        userLocation.setText(location);
-        userDoB.setText(dob);
-        userRegistered.setText(registered);
+        userName.setText(TextUtil.getFullName(user));
+        userAbout.setText(TextUtil.about(user));
+        userMail.setText(user.getEmail());
+        userCell.setText(user.getCell());
+        userPhone.setText(user.getPhone());
+        userLocation.setText(TextUtil.getFullLocation(user));
+        userDoB.setText(TextUtil.dateAndTime(user.getDob().getDate()));
+        userRegistered.setText(TextUtil.dateAndTime(user.getRegistered().getDate()));
 
         RequestOptions options = new RequestOptions()
                 .centerCrop()
@@ -117,7 +98,7 @@ public class UserDetailActivity extends AppCompatActivity implements UserInfoCon
 
         Glide.with(this)
                 .asBitmap()
-                .load(avatarURL)
+                .load(user.getPicture().getLarge())
                 .apply(options)
                 .into(userAvatar);
     }

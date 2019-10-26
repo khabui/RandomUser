@@ -9,6 +9,8 @@ public interface UserListContract {
         // limit is number items of page
         // offset is current last index of the list
         void getDataFromURL(int offset, int limit, String nation);
+
+        void clearDatabase();
     }
 
     interface View {

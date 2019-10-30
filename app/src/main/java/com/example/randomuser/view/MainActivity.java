@@ -25,6 +25,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.reactivex.disposables.CompositeDisposable;
 
 public class MainActivity extends AppCompatActivity implements RecyclerViewAdapter.OnUserListener, UserListContract.View {
 
@@ -35,6 +36,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
     private RecyclerViewAdapter adapter;
 
     private boolean isLoading = false;
+//    private CompositeDisposable disposable = new CompositeDisposable();
 
     @BindView(R.id.swipe_refresh)
     SwipeRefreshLayout swipeRefreshLayout;
@@ -150,6 +152,12 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
                 }, 1000);
             }
         });
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        userListPresenter.onDestroy();
     }
 
 }

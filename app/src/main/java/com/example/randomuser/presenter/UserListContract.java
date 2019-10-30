@@ -4,6 +4,8 @@ import com.example.randomuser.model.User;
 
 import java.util.List;
 
+import io.reactivex.disposables.CompositeDisposable;
+
 public interface UserListContract {
     interface Presenter {
         // limit is number items of page
@@ -11,6 +13,8 @@ public interface UserListContract {
         void getDataFromURL(int offset, int limit, String nation);
 
         void clearDatabase();
+
+        void onDestroy();
     }
 
     interface View {

@@ -36,7 +36,8 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
     private RecyclerViewAdapter adapter;
 
     private boolean isLoading = false;
-//    private CompositeDisposable disposable = new CompositeDisposable();
+    private List<User> users = new ArrayList<>();
+    private int index = 0;
 
     @BindView(R.id.swipe_refresh)
     SwipeRefreshLayout swipeRefreshLayout;
@@ -46,9 +47,6 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
 
     @BindView(R.id.loadingBar)
     ProgressBar progressBar;
-
-    private List<User> users = new ArrayList<>();
-    private int index = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -36,57 +36,6 @@ public class UserListPresenter implements UserListContract.Presenter {
     @Override
     public void getDataFromURL(final int index, int limit, String nation) {
         UserInterface userInterface = RetrofitInstance.getRetrofitInstance().create(UserInterface.class);
-//        userInterface.fetchUsers(limit, nation).enqueue(new Callback<ApiResponse>() {
-//            @Override
-//            public void onResponse(Call<ApiResponse> call, Response<ApiResponse> response) {
-//                if (response.body() != null) {
-//                    ApiResponse apiResponse = response.body();
-//                    for (User user : apiResponse.getResults()) {
-//                        userDatabase.userDao().insertUser(user);
-//                    }
-//
-//                    boolean isLoadMore = (index != 0);
-//                    List<User> userList = new ArrayList<>(userDatabase.userDao().getUserList());
-//                    userListView.onGetDataSuccess(isLoadMore, userList);
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(Call<ApiResponse> call, Throwable t) {
-//                userListView.onGetDataFailure();
-//            }
-//        });
-
-//        userInterface.fetchUsers(limit, nation)
-//                .subscribeOn(Schedulers.io())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribe(new Consumer<ApiResponse>() {
-//                    @Override
-//                    public void accept(ApiResponse apiResponse) throws Exception {
-//                        handleData(index, apiResponse);
-//                    }
-//                });
-
-//        userInterface.fetchUsers(limit, nation)
-//                .subscribeOn(Schedulers.io())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribe(new DisposableObserver<ApiResponse>() {
-//                    @Override
-//                    public void onNext(ApiResponse response) {
-//                        handleData(index, response);
-//                    }
-//
-//                    @Override
-//                    public void onError(Throwable e) {
-//                        Log.e(TAG, "onError: ", e);
-//                    }
-//
-//                    @Override
-//                    public void onComplete() {
-//
-//                    }
-//                });
-
         userInterface.fetchUsers(limit, nation)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

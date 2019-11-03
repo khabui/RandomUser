@@ -25,7 +25,6 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import io.reactivex.disposables.CompositeDisposable;
 
 public class MainActivity extends AppCompatActivity implements RecyclerViewAdapter.OnUserListener, UserListContract.View {
 

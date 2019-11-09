@@ -17,6 +17,7 @@
         android:autofillHints="example@test.com"
         android:background="#11000000"
         android:drawableStart="@drawable/ic_action_user"
+        android:singleLine="true"
         android:ems="10"
         android:hint="@string/login_email_hint"
         android:inputType="textPersonName"
@@ -32,6 +33,7 @@
         android:autofillHints="abc@ABC123"
         android:background="#11000000"
         android:drawableStart="@drawable/ic_action_password"
+        android:singleLine="true"
         android:ems="10"
         android:hint="@string/login_password_hint" />
     <!--        android:inputType="textPassword" />-->

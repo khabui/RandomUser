@@ -17,4 +17,8 @@
     <string name="default_location">Lousiana, Tulsa, 5210 Frances Ct, 69834</string>
     <string name="default_dob">1975-11-12 06:34:44</string>
     <string name="default_registered">2015-11-04 22:09:36</string>
+    <string name="login_email_hint">Email</string>
+    <string name="login_password_hint">Password</string>
+    <string name="login_button">Log In</string>
+    <string name="login_register">Register Here</string>
 </resources>

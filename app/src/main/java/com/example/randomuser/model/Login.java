@@ -36,32 +36,6 @@ public class Login implements Parcelable {
     @Expose
     private String sha256;
 
-    /**
-     * No args constructor for use in serialization
-     */
-    public Login() {
-    }
-
-    /**
-     * @param username
-     * @param sha256
-     * @param md5
-     * @param sha1
-     * @param uuid
-     * @param password
-     * @param salt
-     */
-    public Login(String uuid, String username, String password, String salt, String md5, String sha1, String sha256) {
-        super();
-        this.uuid = uuid;
-        this.username = username;
-        this.password = password;
-        this.salt = salt;
-        this.md5 = md5;
-        this.sha1 = sha1;
-        this.sha256 = sha256;
-    }
-
     protected Login(Parcel in) {
         uuid = in.readString();
         username = in.readString();

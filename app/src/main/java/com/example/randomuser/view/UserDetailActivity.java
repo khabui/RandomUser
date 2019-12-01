@@ -1,4 +1,4 @@
-package com.example.randomuser.activities;
+package com.example.randomuser.view;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,6 +12,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.randomuser.R;
 import com.example.randomuser.model.User;
+import com.example.randomuser.presenter.UserInfoContract;
 import com.example.randomuser.util.TextUtil;
 
 import java.util.Objects;
@@ -20,13 +21,13 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class UserDetailActivity extends AppCompatActivity {
+public class UserDetailActivity extends AppCompatActivity implements UserInfoContract.View {
 
     @BindView(R.id.user_detail_name)
     TextView userName;
 
     @BindView(R.id.user_about)
-    TextView userFirst;
+    TextView userAbout;
 
     @BindView(R.id.user_detail_mail)
     TextView userMail;
@@ -58,44 +59,15 @@ public class UserDetailActivity extends AppCompatActivity {
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
-        // receive data
-        Intent intent = getIntent();
-        User user = intent.getParcelableExtra("user_detail");
-
-        assert user != null;
-        String name = TextUtil.toTitleCase(user.getName().getFirst() + " " + user.getName().getLast());
-        String first = "About " + user.getName().getFirst();
-        String avatarURL = user.getPicture().getLarge();
-        String mail = user.getEmail();
-        String cell = user.getCell();
-        String phone = user.getPhone();
-        String location = TextUtil.toTitleCase(user.getLocation().getStreet() + ", " + user.getLocation().getCity() + " Ct, " + user.getLocation().getState());
-        String dob = user.getDob().getDate().split("T")[0] + " " + user.getDob().getDate().split("T")[1].split("Z")[0];
-        String registered = user.getRegistered().getDate().split("T")[0] + " " + user.getRegistered().getDate().split("T")[1].split("Z")[0];
-
         // bind the view using ButterKnife
         ButterKnife.bind(this);
 
-        // set value to view
-        userName.setText(name);
-        userFirst.setText(first);
-        userMail.setText(mail);
-        userCell.setText(cell);
-        userPhone.setText(phone);
-        userLocation.setText(location);
-        userDoB.setText(dob);
-        userRegistered.setText(registered);
-
-        RequestOptions options = new RequestOptions()
-                .centerCrop()
-                .placeholder(R.mipmap.ic_launcher_round)
-                .error(R.mipmap.ic_launcher_round);
-
-        Glide.with(this)
-                .asBitmap()
-                .load(avatarURL)
-                .apply(options)
-                .into(userAvatar);
+        // receive data
+        Intent intent = getIntent();
+        User user = intent.getParcelableExtra("user_detail");
+        if (user != null) {
+            showUserInfo(user);
+        }
     }
 
     @Override
@@ -105,5 +77,29 @@ public class UserDetailActivity extends AppCompatActivity {
             this.finish();
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void showUserInfo(User user) {
+        // set value to view
+        userName.setText(TextUtil.getFullName(user));
+        userAbout.setText(TextUtil.about(user));
+        userMail.setText(user.getEmail());
+        userCell.setText(user.getCell());
+        userPhone.setText(user.getPhone());
+        userLocation.setText(TextUtil.getFullLocation(user));
+        userDoB.setText(TextUtil.dateAndTime(user.getDob().getDate()));
+        userRegistered.setText(TextUtil.dateAndTime(user.getRegistered().getDate()));
+
+        RequestOptions options = new RequestOptions()
+                .centerCrop()
+                .placeholder(R.mipmap.ic_launcher_round)
+                .error(R.mipmap.ic_launcher_round);
+
+        Glide.with(this)
+                .asBitmap()
+                .load(user.getPicture().getLarge())
+                .apply(options)
+                .into(userAvatar);
     }
 }

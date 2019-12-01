@@ -3,79 +3,85 @@ package com.example.randomuser.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.Ignore;
+import androidx.room.PrimaryKey;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+@Entity(tableName = "user")
 public class User implements Parcelable {
 
+    @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = "userId")
+    public int userId;
+
+    @ColumnInfo(name = "gender")
     @SerializedName("gender")
     @Expose
     private String gender;
 
+    @ColumnInfo(name = "name")
     @SerializedName("name")
     @Expose
     private Name name;
 
+    @ColumnInfo(name = "location")
     @SerializedName("location")
     @Expose
     private Location location;
 
+    @ColumnInfo(name = "email")
     @SerializedName("email")
     @Expose
     private String email;
 
+    @ColumnInfo(name = "login")
     @SerializedName("login")
     @Expose
     private Login login;
 
+    @ColumnInfo(name = "dob")
     @SerializedName("dob")
     @Expose
     private Dob dob;
 
+    @ColumnInfo(name = "registered")
     @SerializedName("registered")
     @Expose
     private Registered registered;
 
+    @ColumnInfo(name = "phone")
     @SerializedName("phone")
     @Expose
     private String phone;
 
+    @ColumnInfo(name = "cell")
     @SerializedName("cell")
     @Expose
     private String cell;
 
+    @ColumnInfo(name = "id")
     @SerializedName("id")
     @Expose
     private Id id;
 
+    @ColumnInfo(name = "picture")
     @SerializedName("picture")
     @Expose
     private Picture picture;
 
+    @ColumnInfo(name = "nat")
     @SerializedName("nat")
     @Expose
     private String nat;
 
-    /**
-     * No args constructor for use in serialization
-     */
+    @Ignore
     public User() {
     }
 
-    /**
-     * @param picture
-     * @param id
-     * @param phone
-     * @param email
-     * @param location
-     * @param registered
-     * @param cell
-     * @param dob
-     * @param name
-     * @param gender
-     * @param nat
-     * @param login
-     */
     public User(String gender, Name name, Location location, String email, Login login, Dob dob, Registered registered, String phone, String cell, Id id, Picture picture, String nat) {
         super();
         this.gender = gender;

@@ -8,7 +8,10 @@ import androidx.room.Update;
 
 import com.example.randomuser.model.User;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import io.reactivex.Single;
 
 import static androidx.room.OnConflictStrategy.REPLACE;
 
@@ -19,7 +22,7 @@ public interface UserDao {
     User findUserByID(int userId);
 
     @Query("SELECT * FROM user")
-    List<User> getUserList();
+    Single<List<User>> getUserList();
 
     @Insert(onConflict = REPLACE)
     void insertUser(User user);

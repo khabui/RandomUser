@@ -115,7 +115,6 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
         if (!isLoadMore) {
             index = 0;
             users.clear();
-            userListPresenter.clearDatabase();
         }
 
         index = users.size() - 1;

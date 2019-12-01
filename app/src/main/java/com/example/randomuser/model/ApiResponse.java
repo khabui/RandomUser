@@ -7,11 +7,12 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class ApiResponse implements Parcelable {
     @SerializedName("results")
     @Expose
-    ArrayList<User> results;
+    List<User> results;
 
     public ApiResponse(ArrayList<User> results) {
         this.results = results;
@@ -33,7 +34,7 @@ public class ApiResponse implements Parcelable {
         }
     };
 
-    public ArrayList<User> getResults() {
+    public List<User> getResults() {
         return results;
     }
 

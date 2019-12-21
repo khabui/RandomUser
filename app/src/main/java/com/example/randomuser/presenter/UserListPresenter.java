@@ -80,67 +80,7 @@ public class UserListPresenter implements UserListContract.Presenter {
                         Log.e(TAG, "onComplete");
                     }
                 });
-
-//                .subscribeOn(Schedulers.io());
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribe(new SingleObserver<ArrayList<User>>() {
-//                    @Override
-//                    public void onSubscribe(Disposable d) {
-//                        disposable.add(d);
-//                    }
-//
-//                    @Override
-//                    public void onSuccess(ArrayList<User> users) {
-//
-//                        List<User> userList = new ArrayList<>(userList);
-//                        Log.w("TAG", "onSuccess: " + userList.size());
-//
-//                        boolean isLoadMore = index != 0;
-//                        userListView.onGetDataSuccess(isLoadMore, users);
-//                    }
-//
-//                    @Override
-//                    public void onError(Throwable e) {
-//                        userListView.onGetDataFailure();
-//                    }
-//                });
-
-//                .subscribe(new Observer<ApiResponse>() {
-//                    @Override
-//                    public void onSubscribe(Disposable d) {
-//                        disposable.add(d);
-//                    }
-//
-//                    @Override
-//                    public void onNext(ApiResponse response) {
-//                        handleData(index, response);
-//                    }
-//
-//                    @Override
-//                    public void onError(Throwable e) {
-//                        Log.e(TAG, "onError: ", e);
-//                    }
-//
-//                    @Override
-//                    public void onComplete() {
-//                        Log.d(TAG, "onComplete: called.");
-//                    }
-//                });
     }
-
-//    private void handleData(int index, ApiResponse response) {
-//        if (response != null) {
-//            for (User user : response.getResults()) {
-//                userDatabase.userDao().insertUser(user);
-//            }
-//
-//            boolean isLoadMore = (index != 0);
-//            List<User> userList = new ArrayList<>(userDatabase.userDao().getUserList());
-//            userListView.onGetDataSuccess(isLoadMore, userList);
-//        } else {
-//            userListView.onGetDataFailure();
-//        }
-//    }
 
     @Override
     public void clearDatabase() {

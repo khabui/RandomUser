@@ -135,6 +135,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
             @Override
             public void onRefresh() {
                 final Handler handler = new Handler();
+                userListPresenter.clearDatabase();
                 index = 0;
                 userListPresenter.getDataFromURL(index, 20, "us");
 

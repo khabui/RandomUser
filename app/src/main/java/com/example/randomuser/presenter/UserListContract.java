@@ -4,6 +4,7 @@ import com.example.randomuser.model.User;
 
 import java.util.List;
 
+// Interaction with View and
 public interface UserListContract {
     interface Presenter {
         // limit is number items of page

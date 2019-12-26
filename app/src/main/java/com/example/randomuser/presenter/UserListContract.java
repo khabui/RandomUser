@@ -12,8 +12,6 @@ public interface UserListContract {
         void getDataFromURL(int offset, int limit, String nation);
 
         void clearDatabase();
-
-        void onDestroy();
     }
 
     interface View {

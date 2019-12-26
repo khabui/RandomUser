@@ -151,10 +151,4 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
         });
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        userListPresenter.onDestroy();
-    }
-
 }

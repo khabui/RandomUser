@@ -1,7 +1,13 @@
-package com.example.randomuser.presenter;
+package com.example.randomuser;
 
-import android.content.Context;
+import android.app.Notification;
+import android.app.Service;
+import android.content.Intent;
+import android.os.IBinder;
 import android.util.Log;
+
+import androidx.annotation.Nullable;
+import androidx.core.app.NotificationCompat;
 
 import com.example.randomuser.database.UserDatabase;
 import com.example.randomuser.model.ApiResponse;
@@ -19,24 +25,42 @@ import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 import io.reactivex.subscribers.DisposableSubscriber;
 
-public class UserListPresenter implements UserListContract.Presenter {
-    private static final String TAG = "UserListPresenter";
+import static com.example.randomuser.MainApplication.CHANNEL_ID;
 
-    private UserListContract.View userListView;
-    private UserDatabase userDatabase;
+public class NotiService extends Service {
 
-    public UserListPresenter(UserListContract.View userListView, Context context) {
-        this.userListView = userListView;
-        userDatabase = UserDatabase.getInstance(context);
+    private static final String TAG = "NotiService";
+
+    private UserDatabase database;
+    private int numberOfUser = 0;
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+
+        database = UserDatabase.getInstance(getApplicationContext());
     }
 
     @Override
-    public void getDataFromURL(final int index, int limit, String nation) {
+    public int onStartCommand(Intent intent, int flags, int startId) {
+        addUser();
 
+        Notification notification = new NotificationCompat.Builder(this, CHANNEL_ID)
+                .setContentTitle("TestDatabase Notification")
+                .setContentText("Current number of user: " + numberOfUser)
+                .setSmallIcon(R.drawable.ic_android)
+                .build();
+
+        startForeground(1, notification);
+
+        return START_NOT_STICKY;
+    }
+
+    private void addUser() {
         UserInterface userInterface = RetrofitInstance.getRetrofitInstance().create(UserInterface.class);
-        final Single<List<User>> singleLocal = userDatabase.userDao().getUserList();
+        final Single<List<User>> singleLocal = database.userDao().getUserList();
 
-        final Single<List<User>> singleRemote = userInterface.fetchUsers(limit, nation)
+        final Single<List<User>> singleRemote = userInterface.fetchUsers(1, "us")
                 .flatMap(new Function<ApiResponse, SingleSource<List<User>>>() {
                     @Override
                     public SingleSource<List<User>> apply(ApiResponse response) {
@@ -44,7 +68,7 @@ public class UserListPresenter implements UserListContract.Presenter {
                         Log.w("TAG", "remote: " + users.size());
 
                         for (User user : users) {
-                            userDatabase.userDao().insertUser(user);
+                            database.userDao().insertUser(user);
                         }
                         return Single.just(users);
                     }
@@ -62,26 +86,24 @@ public class UserListPresenter implements UserListContract.Presenter {
                     @Override
                     public void onNext(List<User> users) {
                         Log.w("TAG", "onNext: " + users.size());
-                        boolean isLoadMore = index != 0;
-                        userListView.onGetDataSuccess(isLoadMore, users);
+                        numberOfUser = users.size();
                     }
 
                     @Override
                     public void onError(Throwable e) {
                         Log.e(TAG, "onError: ", e);
-                        userListView.onGetDataFailure();
                     }
 
                     @Override
                     public void onComplete() {
-                        Log.e(TAG, "onComplete");
+                        Log.d(TAG, "onComplete");
                     }
                 });
     }
 
+    @Nullable
     @Override
-    public void clearDatabase() {
-        userDatabase.userDao().deleteAll();
+    public IBinder onBind(Intent intent) {
+        return null;
     }
-
 }

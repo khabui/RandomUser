@@ -16,22 +16,6 @@ public class Dob implements Parcelable {
     @Expose
     private Integer age;
 
-//    /**
-//     * No args constructor for use in serialization
-//     */
-//    public Dob() {
-//    }
-//
-//    /**
-//     * @param age
-//     * @param date
-//     */
-//    public Dob(String date, Integer age) {
-//        super();
-//        this.date = date;
-//        this.age = age;
-//    }
-
     protected Dob(Parcel in) {
         date = in.readString();
         if (in.readByte() == 0) {

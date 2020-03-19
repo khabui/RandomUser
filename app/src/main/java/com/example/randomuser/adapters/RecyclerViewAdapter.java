@@ -23,7 +23,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ItemViewHolder> {
 
     private static final String TAG = "RecyclerViewAdapter";
 
@@ -40,13 +40,13 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     @NonNull
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.generated_user_layout, parent, false);
         return new ItemViewHolder(view, onUserListener);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, final int position) {
+    public void onBindViewHolder(@NonNull ItemViewHolder holder, final int position) {
         Log.d(TAG, "onBindViewHolder: Called.");
 
         RequestOptions options = new RequestOptions()
@@ -58,9 +58,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 .asBitmap()
                 .load(listUser.get(position).getPicture().getMedium())
                 .apply(options)
-                .into(((ItemViewHolder) holder).imageView);
+                .into(holder.imageView);
 
-        ((ItemViewHolder) holder).textView.setText(TextUtil.toTitleCase(listUser.get(position).getName().getFirst() + " " + listUser.get(position).getName().getLast()));
+        holder.textView.setText(TextUtil.toTitleCase(listUser.get(position).getName().getFirst() + " " + listUser.get(position).getName().getLast()));
     }
 
     @Override

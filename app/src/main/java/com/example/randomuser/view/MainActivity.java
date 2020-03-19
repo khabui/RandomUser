@@ -131,23 +131,20 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
 
     @Override
     public void onSwipeToRefresh() {
-        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                final Handler handler = new Handler();
-                userListPresenter.clearDatabase();
-                index = 0;
-                userListPresenter.getDataFromURL(index, 20, "us");
+        swipeRefreshLayout.setOnRefreshListener(() -> {
+            final Handler handler = new Handler();
+            userListPresenter.clearDatabase();
+            index = 0;
+            userListPresenter.getDataFromURL(index, 20, "us");
 
-                handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (swipeRefreshLayout.isRefreshing()) {
-                            swipeRefreshLayout.setRefreshing(false);
-                        }
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    if (swipeRefreshLayout.isRefreshing()) {
+                        swipeRefreshLayout.setRefreshing(false);
                     }
-                }, 1000);
-            }
+                }
+            }, 1000);
         });
     }
 

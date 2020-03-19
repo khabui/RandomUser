@@ -37,17 +37,14 @@ public class UserListPresenter implements UserListContract.Presenter {
         final Single<List<User>> singleLocal = userDatabase.userDao().getUserList();
 
         final Single<List<User>> singleRemote = userInterface.fetchUsers(limit, nation)
-                .flatMap(new Function<ApiResponse, SingleSource<List<User>>>() {
-                    @Override
-                    public SingleSource<List<User>> apply(ApiResponse response) {
-                        List<User> users = response.getResults();
-                        Log.w("TAG", "remote: " + users.size());
+                .flatMap((Function<ApiResponse, SingleSource<List<User>>>) response -> {
+                    List<User> users = response.getResults();
+                    Log.w("TAG", "remote: " + users.size());
 
-                        for (User user : users) {
-                            userDatabase.userDao().insertUser(user);
-                        }
-                        return Single.just(users);
+                    for (User user : users) {
+                        userDatabase.userDao().insertUser(user);
                     }
+                    return Single.just(users);
                 });
 
 

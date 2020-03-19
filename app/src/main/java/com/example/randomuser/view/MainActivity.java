@@ -137,12 +137,9 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
             index = 0;
             userListPresenter.getDataFromURL(index, 20, "us");
 
-            handler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    if (swipeRefreshLayout.isRefreshing()) {
-                        swipeRefreshLayout.setRefreshing(false);
-                    }
+            handler.postDelayed(() -> {
+                if (swipeRefreshLayout.isRefreshing()) {
+                    swipeRefreshLayout.setRefreshing(false);
                 }
             }, 1000);
         });

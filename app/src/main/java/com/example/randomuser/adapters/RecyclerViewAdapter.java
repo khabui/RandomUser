@@ -37,8 +37,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     @NonNull
     @Override
     public ItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.generated_user_layout, parent, false);
-        return new ItemViewHolder(view, onUserListener);
+        return ItemViewHolder.from(parent, onUserListener);
     }
 
     @Override
@@ -66,7 +65,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
         OnUserListener onUserListener;
 
-        ItemViewHolder(@NonNull View itemView, OnUserListener onUserListener) {
+        private ItemViewHolder(@NonNull View itemView, OnUserListener onUserListener) {
             super(itemView);
 
             this.onUserListener = onUserListener;
@@ -93,6 +92,11 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                     .into(imageView);
 
             textView.setText(TextUtil.toTitleCase(item.getName().getFirst() + " " + item.getName().getLast()));
+        }
+
+        static ItemViewHolder from(@NonNull ViewGroup parent, OnUserListener onUserListener) {
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.generated_user_layout, parent, false);
+            return new ItemViewHolder(view, onUserListener);
         }
     }
 

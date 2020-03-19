@@ -1,6 +1,5 @@
 package com.example.randomuser.adapters;
 
-import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,13 +27,10 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     private static final String TAG = "RecyclerViewAdapter";
 
     private List<User> listUser;
-    private Context context;
-
     private OnUserListener onUserListener;
 
-    public RecyclerViewAdapter(List<User> listUser, Context context, OnUserListener onUserListener) {
+    public RecyclerViewAdapter(List<User> listUser, OnUserListener onUserListener) {
         this.listUser = listUser;
-        this.context = context;
         this.onUserListener = onUserListener;
     }
 
@@ -49,18 +45,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     public void onBindViewHolder(@NonNull ItemViewHolder holder, final int position) {
         Log.d(TAG, "onBindViewHolder: Called.");
 
-        RequestOptions options = new RequestOptions()
-                .centerCrop()
-                .placeholder(R.mipmap.ic_launcher_round)
-                .error(R.mipmap.ic_launcher_round);
-
-        Glide.with(context)
-                .asBitmap()
-                .load(listUser.get(position).getPicture().getMedium())
-                .apply(options)
-                .into(holder.imageView);
-
-        holder.textView.setText(TextUtil.toTitleCase(listUser.get(position).getName().getFirst() + " " + listUser.get(position).getName().getLast()));
+        User item = listUser.get(position);
+        holder.bind(item);
     }
 
     @Override
@@ -92,6 +78,21 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         @Override
         public void onClick(View view) {
             onUserListener.onUserClick(getAdapterPosition());
+        }
+
+        void bind(User item) {
+            RequestOptions options = new RequestOptions()
+                    .centerCrop()
+                    .placeholder(R.mipmap.ic_launcher_round)
+                    .error(R.mipmap.ic_launcher_round);
+
+            Glide.with(parentLayout.getContext())
+                    .asBitmap()
+                    .load(item.getPicture().getMedium())
+                    .apply(options)
+                    .into(imageView);
+
+            textView.setText(TextUtil.toTitleCase(item.getName().getFirst() + " " + item.getName().getLast()));
         }
     }
 

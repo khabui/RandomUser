@@ -62,7 +62,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
     private void onSetupRecyclerView() {
         linearLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(linearLayoutManager);
-        adapter = new RecyclerViewAdapter(users, this, this);
+        adapter = new RecyclerViewAdapter(users, this);
         recyclerView.setAdapter(adapter);
 
         onSwipeToRefresh();
